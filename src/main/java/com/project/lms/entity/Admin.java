@@ -1,5 +1,6 @@
 package com.project.lms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,6 +29,11 @@ public class Admin {
 
     @OneToMany(mappedBy = "admin")
     private List<Transaction> transactionList;
+
+    @OneToOne
+    @JoinColumn
+    @JsonIgnoreProperties({"admin"})
+    private AuthUser authUser;
 
 
 }

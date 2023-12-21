@@ -18,9 +18,6 @@ public class CreateTransactionReq {
     private Integer bookId;
 
     @NotNull
-    private Integer adminId;
-
-    @NotNull
     private TransactionType txnType;
 
 //    public Transaction toTxn(){

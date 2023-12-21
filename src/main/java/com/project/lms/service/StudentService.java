@@ -1,8 +1,11 @@
 package com.project.lms.service;
 
 import com.project.lms.dto.CreateStudentRequest;
+import com.project.lms.entity.AuthUser;
 import com.project.lms.entity.Student;
 import com.project.lms.repository.StudentRepository;
+import com.project.lms.utils.AuthUserService;
+import com.project.lms.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,13 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    AuthUserService authUserService;
+
     public void create(Student student){
+        AuthUser authUser=student.getAuthUser();
+        authUser=authUserService.saveAuthUser(authUser, Constants.STUDENT_USER);
+        student.setAuthUser(authUser);
         studentRepository.save(student);
     }
 

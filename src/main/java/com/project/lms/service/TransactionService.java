@@ -34,16 +34,16 @@ public class TransactionService {
     @Autowired
     TransactionRepository transactionRepo;
 
-    public String initiateTxn(CreateTransactionReq req) throws Exception {
+    public String initiateTxn(CreateTransactionReq req,Integer adminId) throws Exception {
         if(req.getTxnType().equals(TransactionType.ISSUE)){
-            return issuance(req);
+            return issuance(req,adminId);
         }
-        return returnBook(req);
+        return returnBook(req,adminId);
     }
 
-    private String issuance(CreateTransactionReq req) throws Exception {
+    private String issuance(CreateTransactionReq req,Integer adminId) throws Exception {
         Student student=studentService.getStudentById(req.getStudentId());
-        Admin admin=adminService.findById(req.getAdminId());
+        Admin admin=adminService.findById(adminId);
         List<Book> bookList =bookService.getBook("id",String.valueOf(req.getBookId()));
         Book book=bookList!=null && !bookList.isEmpty() ? bookList.get(0) : null;
         if(book==null || student==null || admin==null){
@@ -79,9 +79,9 @@ public class TransactionService {
 
     }
 
-    private String returnBook(CreateTransactionReq req) throws Exception {
+    private String returnBook(CreateTransactionReq req,Integer adminId) throws Exception {
         Student student=studentService.getStudentById(req.getStudentId());
-        Admin admin=adminService.findById(req.getAdminId());
+        Admin admin=adminService.findById(adminId);
         List<Book> bookList =bookService.getBook("id",String.valueOf(req.getBookId()));
         Book book=bookList!=null && !bookList.isEmpty() ? bookList.get(0) : null;
         if(book==null || student==null || admin==null){
